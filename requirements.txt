@@ -1,0 +1,9 @@
+certifi==2023.11.17
+cffi @ file:///private/tmp/cffi-20231014-5567-1hyue8f/cffi-1.16.0
+charset-normalizer==3.3.2
+docutils @ file:///private/tmp/docutils-20231015-5454-w1xze4/docutils-0.20.1
+idna==3.6
+pycparser @ file:///private/tmp/pycparser-20231013-5787-1anpge2/pycparser-2.21
+requests==2.31.0
+six==1.16.0
+urllib3==2.1.0
