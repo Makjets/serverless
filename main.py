@@ -81,11 +81,6 @@ def send_email(email, aggregated_info, status, error_message):
     SUBJECT = "Submission Status for " + aggregated_info['assignment_name']
     # Assuming status indicates the submission status ('success' or 'fail')
 
-    # Convert the timestamp to a datetime object
-    timestamp = datetime.strptime(aggregated_info['submission_updated'], "%Y-%m-%dT%H:%M:%S.%fZ")
-
-    # Convert to a user-friendly format
-    user_friendly_format = timestamp.strftime("%d %B %Y %I:%M %p")
 
     if status == 'success':
         BODY_TEXT = (f"Hi {aggregated_info['account_first_name']} {aggregated_info['account_last_name']},\r\n"
@@ -94,7 +89,7 @@ def send_email(email, aggregated_info, status, error_message):
                         f"Here are the details of your submission:\r\n"
                         f"Submitted URL: {aggregated_info['submission_url']}\r\n"
                         f"GCP Path: {aggregated_info['gcp_path']}\r\n"
-                        f"Submission Updated Date: {user_friendly_format}\r\n"
+                        f"Submission Updated Date: {aggregated_info['submission_date']}\r\n"
                         f"Attempts used: {aggregated_info['attempts']}\r\n\n"
                         f"Best Of Luck!\n"
                         f"CSYE6225 Team"
@@ -108,7 +103,7 @@ def send_email(email, aggregated_info, status, error_message):
             <p>Here are the details of your submission:</p>
             <ul>
                 <li>GCP Path: {aggregated_info['gcp_path']}</li>
-                <li>Submission Updated Date: {user_friendly_format}</li>
+                <li>Submission Updated Date: {aggregated_info['submission_date']}</li>
                 <li>Attempts used: {aggregated_info['attempts']}</li>
             </ul>
             <p>Sincerely,<br>Makarand Madhavi<br>CSYE6225 Teaching Assistant</p>
@@ -122,7 +117,7 @@ def send_email(email, aggregated_info, status, error_message):
                         f"{error_message}\r\n"
                         "Please review your submission and try again.\r\n"
                         f"Here are the details of your submission:\r\n"
-                        f"Submission Updated Date: {aggregated_info['submission_updated']}\r\n"
+                        f"Submission Updated Date: {aggregated_info['submission_date']}\r\n"
                         f"Attempts used: {aggregated_info['attempts']}\r\n\n"
                         f"Best Of Luck!\n"
                         f"CSYE6225 Team"
@@ -137,7 +132,7 @@ def send_email(email, aggregated_info, status, error_message):
             <p>Please review your submission and try again.</p>
             <p>Here are the details of your submission:</p>
             <ul>
-                <li>Submission Updated Date: {user_friendly_format}</li>
+                <li>Submission Updated Date: {aggregated_info['submission_date']}</li>
                 <li>Attempts used: {aggregated_info['attempts']}</li>
             </ul>
             <p>Sincerely,<br>Makarand Madhavi<br>CSYE6225 Teaching Assistant</p>
@@ -229,7 +224,7 @@ def lambda_handler(event, context):
         'assignment_id': assignment_info['id'],
         'submission_id': submission_info['id'],
         'submission_url': submission_info['submission_url'],
-        'submission_updated': submission_info['submission_date'],
+        'submission_date': submission_info['submission_date'],
         'account_first_name': account_info['first_name'],
         'account_last_name': account_info['last_name'],
         'account_email': account_info['email'],
